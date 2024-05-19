@@ -27,24 +27,35 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def configure(self):
         self.ok_btn.clicked.connect(self.handle_ok_btn)
 
-        self.timer.timeout.connect(self.show_time)
-        self.timer.start(500)
-        self.city_img.setPixmap(QtGui.QPixmap("city.jpg").scaled(400, 400, Qt.KeepAspectRatio))
+       # self.timer.timeout.connect(self.show_time)
+       # self.timer.start(500)
+       # self.city_img.setPixmap(QtGui.QPixmap("....png").scaled(400, 400, Qt.KeepAspectRatio))
+
+
 
     def show_time(self):
         new_time = datetime.now().strftime('%H:%M:%S')
 
+        new_background = 'sunraise.jpg'
+
+
         hour = datetime.now().hour
         if 10 > hour >= 6:
-            new_time = '🌅' + new_time
-        elif hour < 14:
-            new_time = '🌞' + new_time
-        elif hour < 21:
-            new_time = '🌆' + new_time
+            new_time = "🌅" + new_time
+            new_background = 'sunraise.jpg'
+        elif 10 < hour < 21:
+            new_time = "🌞" + new_time
+            new_background = 'sun.jpg'
+        elif 21 < hour :
+            new_time = "🌆" + new_time
+            new_background = 'moon.jpg'
         else:
-            new_time = '🌙' + new_time
+            new_time = "🌙" + new_time
+            new_background = 'moon.jpg'
 
 
+
+        self.setStyleSheet(f'.QWidget {{background-image: url({new_background}); background-position : center center}}')
         self.time_lbl.setText(datetime.now().strftime('%H:%M:%S'))
 
     def handle_ok_btn(self):
